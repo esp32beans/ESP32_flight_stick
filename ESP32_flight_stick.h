@@ -81,15 +81,16 @@ class ESP32_flight_stick: public USBHIDDevice {
     void loop(void);
     bool write(void);
     bool write(void *report);
-    void press(int button);
-    void release(int button);
+    bool write(void *report, size_t len);
+    void press(uint8_t button);
+    void release(uint8_t button);
     inline void releaseAll(void) { _report.buttons_a = _report.buttons_b = 0;  }
     inline void buttons(uint16_t b) {
       _report.buttons_a = b & 0xFF;
       _report.buttons_b = (b & 0x0F00) >> 4;
     }
-    inline void xAxis(int a) { _report.x = a; }
-    inline void yAxis(int a) { _report.y = a; }
+    inline void xAxis(uint16_t a) { if (a > 1023) a = 1023; _report.x = a; }
+    inline void yAxis(uint16_t a) { if (a > 1023) a = 1023; _report.y = a; }
     inline void twist(uint8_t a) { _report.twist = a; }
     inline void slider(uint8_t a) { _report.slider= a; }
     inline void dPad(FSDirection_t d) { _report.hat = d; }

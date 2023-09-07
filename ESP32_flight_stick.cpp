@@ -139,6 +139,11 @@ bool ESP32_flight_stick::write(void *report) {
   return write();
 }
 
+bool ESP32_flight_stick::write(void *report, size_t len) {
+  memcpy(&_report, report, min(len, sizeof(_report)));
+  return write();
+}
+
 void ESP32_flight_stick::loop(void) {
   if (startMillis != millis()) {
     write();
@@ -146,8 +151,8 @@ void ESP32_flight_stick::loop(void) {
   }
 }
 
-void ESP32_flight_stick::press(int b) {
-  constrain(b, FSBUTTON_front, FSBUTTON_11);
+void ESP32_flight_stick::press(uint8_t b) {
+  if (b > FSBUTTON_11) b = FSBUTTON_11;
   if (b < FSBUTTON_8) {
     _report.buttons_a |= 1 << b;
   } else {
@@ -155,8 +160,8 @@ void ESP32_flight_stick::press(int b) {
   }
 }
 
-void ESP32_flight_stick::release(int b) {
-  constrain(b, FSBUTTON_front, FSBUTTON_11);
+void ESP32_flight_stick::release(uint8_t b) {
+  if (b > FSBUTTON_11) b = FSBUTTON_11;
   if (b < FSBUTTON_8) {
     _report.buttons_a &= ~(1 << b);
   } else {
