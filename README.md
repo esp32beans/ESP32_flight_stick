@@ -1,5 +1,8 @@
 # USB Flight Joystick for ESP32
 
+See https://registry.platformio.org/libraries/schnoog/Joystick_ESP32S2 for a
+more powerful and flexible USB joystick library for ESP32-S2 and ESP32-S3.
+
 This has only been tested on ESP32S3 boards. It should work on ESP32S2 boards.
 
 The 3D joystick has the following controls.
