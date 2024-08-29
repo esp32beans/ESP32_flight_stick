@@ -55,5 +55,5 @@ void loop() {
   // Functions above only set the values.
   // This writes the report to the host.
   FSJoy.write();
-  delay(100);
+  delay(10);
 }
